@@ -60,12 +60,20 @@ class TranslatorTest extends TestCaseDB {
         $this->assertInstanceOf(\Fenos\Notifynder\Models\NotifynderCollection::class, $notifications);
 
         $translations = $notifications->translate('it');
-        $texts = $translations->pluck('text')->unique();
+        if(method_exists($translations, 'pluck')) {
+            $texts = $translations->pluck('text')->unique();
+        } else {
+            $texts = collect($translations->lists('text'))->unique();
+        }
         $this->assertCount(1, $texts);
         $this->assertEquals('benvenuto', $texts->first());
 
         $translations = $notifications->translate('de');
-        $texts = $translations->pluck('text')->unique();
+        if(method_exists($translations, 'pluck')) {
+            $texts = $translations->pluck('text')->unique();
+        } else {
+            $texts = collect($translations->lists('text'))->unique();
+        }
         $this->assertCount(1, $texts);
         $this->assertEquals('willkommen', $texts->first());
     }
@@ -81,7 +89,11 @@ class TranslatorTest extends TestCaseDB {
         $this->assertInstanceOf(\Fenos\Notifynder\Models\NotifynderCollection::class, $notifications);
 
         $translations = $notifications->translate('it');
-        $texts = $translations->pluck('text')->unique();
+        if(method_exists($translations, 'pluck')) {
+            $texts = $translations->pluck('text')->unique();
+        } else {
+            $texts = collect($translations->lists('text'))->unique();
+        }
         $this->assertCount(1, $texts);
         $this->assertEquals('test_fail', $texts->first());
 
