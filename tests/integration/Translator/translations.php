@@ -3,7 +3,10 @@
 return [
 
     'it' => [
-       'welcome' => 'benvenuto'
-   ]
+        'welcome' => 'benvenuto',
+    ],
+    'de' => [
+        'welcome' => 'willkommen',
+    ],
 
 ];

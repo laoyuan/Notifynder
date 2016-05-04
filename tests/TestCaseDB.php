@@ -2,6 +2,11 @@
 
 use Orchestra\Testbench\TestCase;
 
+use Fenos\Notifynder\Models\Notification;
+use Fenos\Tests\Models\User;
+use Fenos\Notifynder\Facades\Notifynder;
+use Fenos\Notifynder\NotifynderServiceProvider;
+
 /**
  * Class TestCaseDB
  */
@@ -13,7 +18,16 @@ abstract class TestCaseDB extends TestCase {
      */
     protected function getPackageProviders($app)
     {
-        return ['Fenos\Notifynder\NotifynderServiceProvider'];
+        return [
+            NotifynderServiceProvider::class,
+        ];
+    }
+
+    protected function getPackageAliases($app)
+    {
+        return [
+            'Notifynder' => Notifynder::class
+        ];
     }
 
     /**
@@ -23,17 +37,14 @@ abstract class TestCaseDB extends TestCase {
     {
         parent::setUp();
 
-        // This should only do work for Sqlite DBs in memory.
-        $artisan = $this->app->make('Illuminate\Contracts\Console\Kernel');
-
         app('db')->beginTransaction();
 
-        $this->migrate($artisan);
-        $this->migrate($artisan,'/../../../../tests/migrations');
+        $this->migrate(realpath(__DIR__.'/../src/migrations'));
+        $this->migrate(realpath(__DIR__.'/migrations'));
 
         // Set up the User Test Model
-        app('config')->set('notifynder.notification_model','Fenos\Notifynder\Models\Notification');
-        app('config')->set('notifynder.model','Fenos\Tests\Models\User');
+        app('config')->set('notifynder.notification_model', Notification::class);
+        app('config')->set('notifynder.model', User::class);
 
     }
 
@@ -75,14 +86,13 @@ abstract class TestCaseDB extends TestCase {
     /**
      * Migrate the migrations files
      *
-     * @param        $artisan
      * @param string $path
      */
-    private function migrate($artisan,$path = '/../../../../src/migrations')
+    private function migrate($path)
     {
-        $artisan->call('migrate', [
+        $this->artisan('migrate', [
             '--database' => 'testbench',
-            '--path'     => $path
+            '--realpath' => $path
         ]);
     }
 }

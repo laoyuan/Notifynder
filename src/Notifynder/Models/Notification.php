@@ -193,7 +193,7 @@ class Notification extends Model
         if (function_exists('app') && app() instanceof Container) {
             return Arr::flatten(config('notifynder.additional_fields', []));
         }
-        return [];
+        return []; // @codeCoverageIgnore
     }
 
     /**

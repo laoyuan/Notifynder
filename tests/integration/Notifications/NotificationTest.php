@@ -36,7 +36,7 @@ class NotificationTest extends TestCaseDB {
     }
 
     /** @test */
-    function it_retrieve_notification_with_parsed_body()
+    function it_retrieve_notification_with_parsed_text()
     {
         $extraValues = json_encode(['look' => 'Amazing']);
         $category = $this->createCategory(['text' => 'parse this {extra.look} value']);
@@ -47,6 +47,20 @@ class NotificationTest extends TestCaseDB {
 
         $bodyParsed = 'parse this Amazing value';
         $this->assertEquals($bodyParsed,$notifications[0]->text);
+    }
+
+    /** @test */
+    function it_retrieve_notification_with_notify_body()
+    {
+        $extraValues = json_encode(['look' => 'Amazing']);
+        $category = $this->createCategory(['text' => 'parse this {extra.look} value']);
+
+        $notification = $this->createNotification(['extra' => $extraValues,'category_id' => $category->id]);
+
+        $notifications = $this->notification->getNotRead($notification->to->id);
+
+        $bodyParsed = 'parse this Amazing value';
+        $this->assertEquals($bodyParsed,$notifications[0]->notify_body);
     }
 
     /** @test */
