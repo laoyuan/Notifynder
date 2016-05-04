@@ -60,6 +60,7 @@ class TranslatorTest extends TestCaseDB {
         $this->assertInstanceOf(\Fenos\Notifynder\Models\NotifynderCollection::class, $notifications);
 
         $translations = $notifications->translate('it');
+        $translations = $translations->toBase();
         if(method_exists($translations, 'pluck')) {
             $texts = $translations->pluck('text')->unique();
         } else {
@@ -69,6 +70,7 @@ class TranslatorTest extends TestCaseDB {
         $this->assertEquals('benvenuto', $texts->first());
 
         $translations = $notifications->translate('de');
+        $translations = $translations->toBase();
         if(method_exists($translations, 'pluck')) {
             $texts = $translations->pluck('text')->unique();
         } else {
@@ -89,6 +91,7 @@ class TranslatorTest extends TestCaseDB {
         $this->assertInstanceOf(\Fenos\Notifynder\Models\NotifynderCollection::class, $notifications);
 
         $translations = $notifications->translate('it');
+        $translations = $translations->toBase();
         if(method_exists($translations, 'pluck')) {
             $texts = $translations->pluck('text')->unique();
         } else {
