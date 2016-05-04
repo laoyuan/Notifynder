@@ -317,11 +317,13 @@ class NotifynderServiceProvider extends ServiceProvider
      */
     protected function migrationFilepath($filename)
     {
+        // @codeCoverageIgnoreStart
         if(function_exists('database_path')) {
             return database_path('/migrations/'.$filename);
         } else {
             return base_path('/database/migrations/'.$filename);
         }
+        // @codeCoverageIgnoreEnd
     }
 
     /**
