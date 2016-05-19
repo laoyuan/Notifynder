@@ -2,8 +2,6 @@
 
 namespace Fenos\Notifynder\Models;
 
-use Fenos\Notifynder\Contracts\NotifynderTranslator;
-use Fenos\Notifynder\Exceptions\NotificationTranslationNotFoundException;
 use Fenos\Notifynder\Parsers\NotifynderParser;
 use Illuminate\Database\Eloquent\Collection;
 
