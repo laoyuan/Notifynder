@@ -36,6 +36,10 @@ class Notification extends Model
         'to_id', 'to_type', 'from_id', 'from_type',
         'category_id', 'read', 'url', 'extra', 'expire_time',
     ];
+    protected $apopends = [
+        'template_body',
+        'notify_body',
+    ];
 
     /**
      * Notification constructor.
@@ -139,15 +143,26 @@ class Notification extends Model
         }
     }
 
+    public function getTemplateBodyAttribute()
+    {
+        if(config('notifynder.translate', false)) {
+            $key = 'notifynder.'.$this->body->name;
+            $trans = trans($key);
+            if($trans != $key) {
+                return $trans;
+            }
+        }
+        return $this->body->text;
+    }
+
     /**
      * Get parsed body attributes.
      *
-     * @return mixed
+     * @return string
      */
     public function getNotifyBodyAttribute()
     {
         $notifynderParse = new NotifynderParser();
-
         return $notifynderParse->parse($this);
     }
 

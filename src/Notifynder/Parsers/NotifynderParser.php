@@ -33,7 +33,7 @@ class NotifynderParser
      */
     public function parse($item)
     {
-        $body = $item['body']['text'];
+        $body = array_get($item, 'template_body', $item['body']['text']);
 
         $item['extra'] = $this->extraToArray($item['extra']);
         $specialValues = $this->getValues($body);

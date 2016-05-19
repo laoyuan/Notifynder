@@ -27,7 +27,7 @@ return [
      * With the path / NameSpace of your model and extend it
      * with Fenos\Notifynder\Models\Notification
      */
-    'notification_model' => 'Fenos\Notifynder\Models\Notification',
+    'notification_model' => \Fenos\Notifynder\Models\Notification::class,
 
     /*
      * Coordinating a lots notifications that require extra params
@@ -40,16 +40,11 @@ return [
     'strict_extra' => false,
 
     /*
-     * If you wish to have the translations in a specific file
-     * just require the file on the following option.
-     *
-     * To get started with the translations just reference a key with
-     * the language you wish to translate ex 'it' or 'italian' and pass as
-     * value an array with the translations
+     * Enable the laravel included translation. The translations are
+     * searched in a `notifynder.php` file in the current language folder.
+     * The keys for the translations are the category name.
      */
-    'translations'  => [
-
-    ],
+    'translate'  => false,
 
     /*
      * If you have added your own fields to the Notification Model

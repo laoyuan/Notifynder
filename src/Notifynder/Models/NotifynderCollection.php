@@ -13,49 +13,14 @@ use Illuminate\Database\Eloquent\Collection;
 class NotifynderCollection extends Collection
 {
     /**
-     * @var NotifynderTranslator
-     */
-    protected $notifynderTranslator;
-
-    /**
-     * @param array $models
-     */
-    public function __construct($models)
-    {
-        parent::__construct($models);
-    }
-
-    /**
-     * Translator instance.
-     *
-     * @return NotifynderTranslator
-     */
-    public function translator()
-    {
-        return app('notifynder.translator');
-    }
-
-    /**
      * This method translate the body text from
      * another language. It used by collection.
      *
-     * @param $language (String)
-     * @return Collection
+     * @deprecated just hold here for compatibility
+     * @return NotifynderCollection
      */
-    public function translate($language)
+    public function translate()
     {
-        // Loop throught the notifications
-        foreach ($this->items as $key => $item) {
-            try {
-                $translation = $this->translator()
-                    ->translate($language, $this->items[$key]['body']['name']);
-
-                $this->items[$key]['body']['text'] = $translation;
-            } catch (NotificationTranslationNotFoundException $e) {
-                $this->items[$key]['body']['text'];
-            }
-        }
-
         $this->parse();
 
         return $this;
@@ -64,7 +29,7 @@ class NotifynderCollection extends Collection
     /**
      * Parse the body of the notification.
      *
-     * @return $this
+     * @return NotifynderCollection
      */
     public function parse()
     {
