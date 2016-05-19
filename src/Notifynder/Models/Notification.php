@@ -145,13 +145,14 @@ class Notification extends Model
 
     public function getTemplateBodyAttribute()
     {
-        if(config('notifynder.translate', false)) {
+        if (config('notifynder.translate', false)) {
             $key = 'notifynder.'.$this->body->name;
             $trans = trans($key);
-            if($trans != $key) {
+            if ($trans != $key) {
                 return $trans;
             }
         }
+
         return $this->body->text;
     }
 
@@ -163,6 +164,7 @@ class Notification extends Model
     public function getNotifyBodyAttribute()
     {
         $notifynderParse = new NotifynderParser();
+
         return $notifynderParse->parse($this);
     }
 
