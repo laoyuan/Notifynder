@@ -44,7 +44,10 @@ return [
      * searched in a `notifynder.php` file in the current language folder.
      * The keys for the translations are the category name.
      */
-    'translate'  => false,
+    'translation'  => [
+        'enabled' => false,
+        'domain' => 'notifynder',
+    ],
 
     /*
      * If you have added your own fields to the Notification Model

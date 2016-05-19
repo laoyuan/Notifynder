@@ -145,8 +145,8 @@ class Notification extends Model
 
     public function getTemplateBodyAttribute()
     {
-        if(config('notifynder.translate', false)) {
-            $key = 'notifynder.'.$this->body->name;
+        if(config('notifynder.translation.enabled', false)) {
+            $key = config('notifynder.translation.domain', 'notifynder').'.'.$this->body->name;
             $trans = trans($key);
             if($trans != $key) {
                 return $trans;
