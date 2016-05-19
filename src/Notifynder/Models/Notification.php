@@ -148,10 +148,11 @@ class Notification extends Model
         if(config('notifynder.translation.enabled', false)) {
             $key = config('notifynder.translation.domain', 'notifynder').'.'.$this->body->name;
             $trans = trans($key);
-            if($trans != $key) {
+            if ($trans != $key) {
                 return $trans;
             }
         }
+
         return $this->body->text;
     }
 
@@ -163,6 +164,7 @@ class Notification extends Model
     public function getNotifyBodyAttribute()
     {
         $notifynderParse = new NotifynderParser();
+
         return $notifynderParse->parse($this);
     }
 
