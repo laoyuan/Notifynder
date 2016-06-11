@@ -8,6 +8,8 @@ use PhpSpec\ObjectBehavior;
 
 class NotifynderParserSpec extends ObjectBehavior
 {
+    public $url;
+
     public function it_is_initializable()
     {
         $this->shouldHaveType('Fenos\Notifynder\Parsers\NotifynderParser');
@@ -60,6 +62,24 @@ class NotifynderParserSpec extends ObjectBehavior
         ];
 
         $this->parse($notification)->shouldReturn('Hi jhon hello world');
+    }
+
+    /** @test */
+    public function it_replace_property_name_of_current_object()
+    {
+        $this->url = 'http://localhost';
+
+        $notification = [
+            'body' => [
+                'text' => '{from.username} replied to <a href="{url}">your post</a>',
+            ],
+            'from' => [
+                'username' => 'jhon',
+            ],
+            'extra' => null,
+        ];
+
+        $this->parse($notification)->shouldReturn('jhon replied to <a href="http://localhost">your post</a>');
     }
 
     /** @test */
