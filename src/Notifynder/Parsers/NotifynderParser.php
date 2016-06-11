@@ -39,8 +39,8 @@ class NotifynderParser
         $specialValues = $this->getValues($body);
 
         if (count($specialValues) > 0) {
-            $specialValues = array_filter($specialValues, function ($value) {
-                return starts_with($value, 'extra.') || starts_with($value, 'to.') || starts_with($value, 'from.');
+            $specialValues = array_filter($specialValues, function ($value) use ($item) {
+                return isset($item->$value) || starts_with($value, 'extra.') || starts_with($value, 'to.') || starts_with($value, 'from.');
             });
 
             foreach ($specialValues as $replacer) {
